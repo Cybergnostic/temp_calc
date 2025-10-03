@@ -53,10 +53,16 @@ jobs:
         mv dist/temp_calc temp_calc_macos
         zip -r temp_calc_macos.zip temp_calc_macos
         
-    - name: Upload Artifacts
+    - name: Upload Windows Executable Artifact
+      if: runner.os == 'Windows'
       uses: actions/upload-artifact@v4
       with:
-        name: standalone-executables
-        path: |
-          temp_calc_windows.zip 
-          temp_calc_macos.zip
+        name: temp_calc_windows_exe
+        path: temp_calc_windows.zip # Uploads the file from the root workspace
+
+    - name: Upload macOS Executable Artifact
+      if: runner.os == 'macOS'
+      uses: actions/upload-artifact@v4
+      with:
+        name: temp_calc_macos_exe
+        path: temp_calc_macos.zip # Uploads the file from the root workspace
