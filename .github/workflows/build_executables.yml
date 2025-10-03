@@ -10,9 +10,7 @@ jobs:
   build:
     strategy:
       matrix:
-        # Build for both Windows and macOS runners
         os: [windows-latest, macos-latest]
-        # PINNING TO PYTHON 3.11 to match your local environment
         python-version: [3.11] 
     
     runs-on: ${{ matrix.os }}
@@ -27,17 +25,15 @@ jobs:
         python-version: ${{ matrix.python-version }}
 
     - name: Install dependencies
-      # We explicitly install the dependency that causes issues to ensure compatibility.
+      # Installing pyinstaller separately, then installing all project dependencies from requirements.txt
       run: |
         python -m pip install --upgrade pip
-        pip install pyinstaller pandas
-        # Crucial fix: install swisseph first, then flatlib
-        pip install swisseph==2.00.01
-        pip install flatlib
-
+        pip install pyinstaller
+        pip install -r requirements.txt
+        
     - name: Run PyInstaller
-      # Creates the single-file executable in the 'dist' directory
       run: pyinstaller --onefile temp_calc.py
+      
       
     - name: Rename and compress executable for Windows
       if: runner.os == 'Windows'
