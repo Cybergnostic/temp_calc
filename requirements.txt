@@ -1,4 +1,4 @@
 # Requirements.txt
 pandas
 flatlib
-swisseph==2.00.01
+swisseph
