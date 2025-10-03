@@ -37,10 +37,14 @@ jobs:
       
     - name: Rename and compress executable for Windows
       if: runner.os == 'Windows'
-      # PowerShell commands for renaming and zipping the file
+      # We now use 'cd dist' to ensure we are in the correct directory.
       run: |
-        Rename-Item dist\temp_calc.exe temp_calc_windows.exe
+        cd dist
+        Rename-Item temp_calc.exe temp_calc_windows.exe
         Compress-Archive -Path temp_calc_windows.exe -DestinationPath temp_calc_windows.zip
+        
+        # We also need to move the final artifact up one level so the artifact uploader finds it
+        mv temp_calc_windows.zip ..\temp_calc_windows.zip
         
     - name: Rename and compress executable for macOS
       if: runner.os == 'macOS'
