@@ -58,5 +58,5 @@ jobs:
       with:
         name: standalone-executables
         path: |
-          temp_calc_windows.zip
+          temp_calc_windows.zip 
           temp_calc_macos.zip
